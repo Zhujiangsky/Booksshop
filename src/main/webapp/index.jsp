@@ -54,7 +54,7 @@
                             "                </tr>");
                     }
                     i++;
-                    page = "<div class=\"page-spliter\" id=\"fy\"><a onclick=\"onn(1)\" href=\"javascript:void(0)\">首页</a>&nbsp;" + "<a onclick=\"onn(" + (result.currentPage - 1 == 0 ? "1" : (result.currentPage - 1)) + ")\" href=\"javascript:void(0)\">上一页</a>&nbsp;<a onclick=\"onn(" + (result.currentPage == result.pageCount ? (result.pageCount) : (result.currentPage + 1)) + ")\" href=\"javascript:void(0)\">下一页</a>&nbsp;<a onclick=\"onn(" + result.pageCount + ")\" href=\"javascript:void(0)\"\">尾页</a>&nbsp;<p>共" + result.pageCount + "页，当前为第" + result.currentPage + "页</p></div>";
+                    page = "<div class=\"page-spliter\" id=\"fy\"><a onclick=\"onn(1)\" href=\"javascript:void(0)\">首页</a>&nbsp;" + "<a onclick=\"onn(" + (result.currentPage - 1 == 0 ? "1" : (result.currentPage - 1)) + ")\" href=\"javascript:void(0)\">上一页</a>&nbsp;<a onclick=\"onn(" + (result.currentPage == result.pageCount ? (result.pageCount) : (result.currentPage + 1)) + ")\" href=\"javascript:void(0)\">下一页</a>&nbsp;<a onclick=\"onn(" + result.pageCount + ")\" href=\"javascript:void(0)\"\">尾页</a>&nbsp;<p>共" + result.pageCount + "页，当前为第" + result.currentPage + "<input type='hidden' name=\"dqy\"  value=\"" + result.currentPage + "\"/>页</p></div>";
                 });
                 $("#table1").after(page);
             }
@@ -113,7 +113,7 @@
                         "                </tr>");
                 }
                 i++;
-                page = "<div class=\"page-spliter\" id=\"fy\"><a onclick=\"onn(1)\" href=\"javascript:void(0)\">首页</a>&nbsp;" + "<a onclick=\"onn(" + (json.currentPage - 1 == 0 ? "1" : (json.currentPage - 1)) + ")\" href=\"javascript:void(0)\">上一页</a>&nbsp;<a onclick=\"onn(" + (json.currentPage == json.pageCount ? (json.pageCount) : (json.currentPage + 1)) + ")\" href=\"javascript:void(0)\">下一页</a>&nbsp;<a onclick=\"onn(" + json.pageCount + ")\" href=\"javascript:void(0)\"\">尾页</a>&nbsp;<p>共" + json.pageCount + "页，当前为第" + json.currentPage + "页</p></div>";
+                page = "<div class=\"page-spliter\" id=\"fy\"><a onclick=\"onn(1)\" href=\"javascript:void(0)\">首页</a>&nbsp;" + "<a onclick=\"onn(" + (json.currentPage - 1 == 0 ? "1" : (json.currentPage - 1)) + ")\" href=\"javascript:void(0)\">上一页</a>&nbsp;<a onclick=\"onn(" + (json.currentPage == json.pageCount ? (json.pageCount) : (json.currentPage + 1)) + ")\" href=\"javascript:void(0)\">下一页</a>&nbsp;<a onclick=\"onn(" + json.pageCount + ")\" href=\"javascript:void(0)\"\">尾页</a>&nbsp;<p>共" + json.pageCount + "页，当前为第" + json.currentPage + "<input type='hidden' name=\"dqy\"  value=\"" + json.currentPage + "\"/>页</p></div>";
             });
             $("#table1").after(page);
         }
@@ -139,7 +139,7 @@
 </div>
 <div id="content" class="wrap">
     <div class="list bookList">
-        <form method="post" name="shoping" action="shopping.jsp">
+        <form method="post" name="shoping" action="BooksServlet?op=aaa">
             <table id="table1">
             </table>
             <div class="page-spliter" id="fy">

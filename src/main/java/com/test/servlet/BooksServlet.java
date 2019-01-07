@@ -24,6 +24,7 @@ public class BooksServlet extends HttpServlet {
             try {
                 Pager p = this.showBooks(request, response);
                 if (request.getSession().getAttribute("bookss") != null) {
+
                     ss = (String) request.getSession().getAttribute("bookss");
                     ss += request.getParameter("books");
                     request.getSession().setAttribute("bookss", ss);
@@ -40,6 +41,16 @@ public class BooksServlet extends HttpServlet {
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
+        } else if (request.getParameter("op").equals("aaa")) {
+            String str[] = request.getParameterValues("bookId");
+            String s = request.getParameter("dqy");
+            System.out.println(s);
+            if (str.length > 0) {
+                for (int i = 0; i < str.length; i++) {
+                    System.out.println(str[i].toString());
+                }
+            }
+
         }
     }
 
