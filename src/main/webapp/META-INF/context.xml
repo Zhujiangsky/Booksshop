@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Context>
+    <Resource name="jdbc/system"
+              author="Container"
+              type="javax.sql.DataSource"
+              maxActive="100"
+              maxIdle="30"
+              maxWait="10000"
+              username="root"
+              password="123456"
+              driverClassName="com.mysql.jdbc.Driver"
+              url="jdbc:mysql://localhost:3306/messages"/>
+
+
+    <Resource name="jdbc/news" auth="Container" type="javax.sql.DataSource"
+              maxIdle="5" maxWaitMillis="1000" maxTotal="100"
+              username="root" password="123456" driverClassName="com.mysql.jdbc.Driver"
+              url="jdbc:mysql://localhost:3306/newsmanagersystem?useSSL=false&amp;serverTimezone=Hongkong&amp;characterEncoding=utf-8&amp;autoReconnect=true"/>
+    <Resource name="jdbc/bookshop" auth="Container" type="javax.sql.DataSource"
+              maxIdle="5" maxWaitMillis="1000" maxTotal="100"
+              username="root" password="123456" driverClassName="com.mysql.jdbc.Driver"
+              url="jdbc:mysql://localhost:3306/bookshop?useSSL=false&amp;serverTimezone=Hongkong&amp;characterEncoding=utf-8&amp;autoReconnect=true"/>
+</Context>
