@@ -12,29 +12,37 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @WebServlet(name = "BooksServlet", urlPatterns = {"/BooksServlet"})
 public class BooksServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
         response.setCharacterEncoding("utf-8");
-        String ss = "";
+        Map<String, String> books = new HashMap<String, String>();
         if (request.getParameter("op").equals("show")) {
             try {
                 Pager p = this.showBooks(request, response);
                 if (request.getSession().getAttribute("bookss") != null) {
-                    System.out.println("fdafdsaf");
-                    ss = (String) request.getSession().getAttribute("bookss");
-                    ss += request.getParameter("books");
-                    request.getSession().setAttribute("bookss", ss);
+                    Map<String, String> boo = (Map<String, String>) request.getSession().getAttribute("bookss");
+                    System.out.println("通过Map.keySet遍历key和value：");
+                    System.out.println("修改好了吗");
+                    boo.put(request.getParameter("pageIndex"), request.getParameter("books"));
+                    for (String key : boo.keySet()) {
+                        System.out.println("key= " + key + " and value= " + boo.get(key));
+                    }
 
                 } else {
-                    ss = request.getParameter("books");
-                    request.getSession().setAttribute("bookss", ss);
+                    if (request.getParameter("books") != null) {
+                        books.put(request.getParameter("pageIndex"), request.getParameter("books"));
+                        request.getSession().setAttribute("bookss", books);
+                    } else {
+                        request.getSession().setAttribute("bookss", books);
+                    }
                 }
                 String s = JSON.toJSONString(p);
-                System.out.println(s);
                 response.getWriter().print(s);
             } catch (SQLException e) {
                 e.printStackTrace();
