@@ -29,6 +29,7 @@ public class BooksServlet extends HttpServlet {
                     Map<String, String> boo = (Map<String, String>) request.getSession().getAttribute("bookss");
                     System.out.println("通过Map.keySet遍历key和value：");
                     System.out.println("修改好了吗");
+                    System.out.println("dddd");
                     boo.put(request.getParameter("pageIndex"), request.getParameter("books"));
                     for (String key : boo.keySet()) {
                         System.out.println("key= " + key + " and value= " + boo.get(key));
