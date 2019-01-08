@@ -24,7 +24,7 @@ public class BooksServlet extends HttpServlet {
             try {
                 Pager p = this.showBooks(request, response);
                 if (request.getSession().getAttribute("bookss") != null) {
-                    System.out.println("版本3.2");
+
                     ss = (String) request.getSession().getAttribute("bookss");
                     ss += request.getParameter("books");
                     request.getSession().setAttribute("bookss", ss);
