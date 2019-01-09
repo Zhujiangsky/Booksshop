@@ -25,7 +25,6 @@
             "data": "op=show&pageIndex=1",                      // 要发送到服务器的数据
             "dataType": "json",                   // 指定传输的数据格式
             "success": function (result) {// 请求成功后要执行的代码
-                alert("ss");
                 $("#table1").append("<tr class=\"title\">\n" +
                     "                    <th class=\"checker\"></th>\n" +
                     "                    <th>书名</th>\n" +
@@ -61,7 +60,6 @@
         });
     });
     var request = new XMLHttpRequest();
-
     function onn(e) {
         var s = "";
         var o = document.getElementsByName("bookId");

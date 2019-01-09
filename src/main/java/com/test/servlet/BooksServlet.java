@@ -22,27 +22,32 @@ public class BooksServlet extends HttpServlet {
         request.setCharacterEncoding("utf-8");
         response.setCharacterEncoding("utf-8");
         Map<String, String> books = new HashMap<String, String>();
+        String booid = request.getParameter("books");
         if (request.getParameter("op").equals("show")) {
             try {
-                Pager p = this.showBooks(request, response);
                 if (request.getSession().getAttribute("bookss") != null) {
                     Map<String, String> boo = (Map<String, String>) request.getSession().getAttribute("bookss");
-                    System.out.println("通过Map.keySet遍历key和value：");
-                    System.out.println("修改好了吗");
-                    System.out.println("dddd");
-                    boo.put(request.getParameter("pageIndex"), request.getParameter("books"));
-                    for (String key : boo.keySet()) {
-                        System.out.println("key= " + key + " and value= " + boo.get(key));
+                    if (booid.length() > 0) {
+                        String booidd = booid.substring(0, booid.length() - 1);
+                        String str[] = booidd.split(",");
+                        for (String strr : str) {
+                            boo.put(strr, strr);
+                        }
                     }
-
                 } else {
-                    if (request.getParameter("books") != null) {
-                        books.put(request.getParameter("pageIndex"), request.getParameter("books"));
+                    if (booid != null) {
+                        String booidd = booid.substring(0, booid.length() - 1);
+                        String str[] = booidd.split(",");
+                        for (String strr : str) {
+                            books.put(strr, strr);
+                        }
                         request.getSession().setAttribute("bookss", books);
                     } else {
+                        System.out.println("4");
                         request.getSession().setAttribute("bookss", books);
                     }
                 }
+                Pager p = this.showBooks(request, response);
                 String s = JSON.toJSONString(p);
                 response.getWriter().print(s);
             } catch (SQLException e) {
@@ -53,13 +58,27 @@ public class BooksServlet extends HttpServlet {
         } else if (request.getParameter("op").equals("aaa")) {
             String str[] = request.getParameterValues("bookId");
             String s = request.getParameter("dqy");
-            System.out.println(s);
-            if (str.length > 0) {
-                for (int i = 0; i < str.length; i++) {
-                    System.out.println(str[i].toString());
-                }
+            String s11 = "";
+            if (request.getSession().getAttribute("bookss") == null) {
+                Map<String, String> map = new HashMap<String, String>();
+                request.getSession().setAttribute("bookss", map);
             }
+            Map<String, String> bb = (Map<String, String>) request.getSession().getAttribute("bookss");
+            if (str != null) {
+                for (String s1 : str) {
+                    s11 += s1 + ",";
+                }
+                String booidd = s11.substring(0, s11.length() - 1);
+                String strr[] = booidd.split(",");
+                for (String strrr : str) {
+                    books.put(strrr, strrr);
+                }
 
+            } else if (bb.keySet().iterator().hasNext()) {
+
+            } else {
+                response.sendRedirect("index.jsp");
+            }
         }
     }
 
