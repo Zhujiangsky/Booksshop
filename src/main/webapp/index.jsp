@@ -141,12 +141,12 @@
 </div>
 <div id="content" class="wrap">
     <div class="list bookList">
-        <form method="post" name="shoping" action="BooksServlet?op=aaa">
+        <form method="post" name="shoping" action="ShoppingServlet?action=shoppingAction&op=zf">
             <table id="table1">
             </table>
             <div class="page-spliter" id="fy">
             </div>
-            <div class="button"><input class="input-btn" type="submit" name="submit" value="" disabled="disabled"/>
+            <div class="button"><input class="input-btn" type="submit" name="submit" value=""/>
             </div>
         </form>
     </div>

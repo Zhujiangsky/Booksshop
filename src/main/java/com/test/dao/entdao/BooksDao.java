@@ -54,8 +54,9 @@ public class BooksDao extends BaseDao implements BooksInterface {
     }
 
     @Override
-    public BooksEntity queryOne(int id) {
-        return null;
+    public BooksEntity queryOne(int id) throws SQLException, ClassNotFoundException {
+        StringBuffer sql = new StringBuffer("SELECT books.bid,books.b_price,books.image,books.bookname from books where 1=1 and bid=?");
+        return this.executeQueryOne(sql.toString(), rm, id);
     }
 
     @Override

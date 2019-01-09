@@ -10,7 +10,7 @@ public interface BooksInterface {
 
     public List<BooksEntity> queryAll(Integer currentPageNo, Integer pageSize) throws SQLException, ClassNotFoundException;
 
-    public BooksEntity queryOne(int id);
+    public BooksEntity queryOne(int id) throws SQLException, ClassNotFoundException;
 
     public int update(BooksEntity booksEntity);
 
