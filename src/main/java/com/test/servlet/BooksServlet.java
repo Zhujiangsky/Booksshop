@@ -25,24 +25,25 @@ public class BooksServlet extends HttpServlet {
         Map<String, String> books = new HashMap<String, String>();
         String booid = request.getParameter("books");
         String booidno = request.getParameter("nobooks");
+        Map<String, String> boo = (Map<String, String>) request.getSession().getAttribute("bookss");
         if (request.getParameter("op").equals("show")) {
             try {
                 if (request.getSession().getAttribute("bookss") != null) {
-                    Map<String, String> boo = (Map<String, String>) request.getSession().getAttribute("bookss");
-                    if (booid.length() > 0) {
+                    if (booid != null && booid.length() > 0) {
                         String booidd = booid.substring(0, booid.length() - 1);
                         String str[] = booidd.split(",");
                         for (String strr : str) {
                             boo.put(strr, strr);
                         }
-                    }
-                    Iterator<String> item = boo.keySet().iterator();
-                    while (item.hasNext()) {
-                        String key = item.next();
-                        if (booidno.indexOf((key + ",")) != -1) {
-                            item.remove();
+                        Iterator<String> item = boo.keySet().iterator();
+                        while (item.hasNext()) {
+                            String key = item.next();
+                            if (booidno.indexOf((key + ",")) != -1) {
+                                item.remove();
+                            }
                         }
                     }
+
                 } else {
                     if (booid != null) {
                         String booidd = booid.substring(0, booid.length() - 1);
@@ -90,12 +91,13 @@ public class BooksServlet extends HttpServlet {
                 for (String strrr : str) {
                     books.put(strrr, strrr);
                 }
-
             } else if (bb.keySet().iterator().hasNext()) {
 
             } else {
                 response.sendRedirect("index.jsp");
             }
+        } else {
+            System.out.println("sssssss");
         }
     }
 
@@ -108,6 +110,7 @@ public class BooksServlet extends HttpServlet {
         String pageIndex = request.getParameter("pageIndex");
         //获得当前页
         if (pageIndex == null || (pageIndex = pageIndex.trim()).length() == 0) {
+
             pageIndex = "1";
         }
         int count = booksDao.count("id");
