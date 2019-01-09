@@ -41,5 +41,4 @@ public class UserinfoAction implements ActionInterface {
             return "login.jsp";
         }
     }
-
 }

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -23,6 +24,7 @@ public class BooksServlet extends HttpServlet {
         response.setCharacterEncoding("utf-8");
         Map<String, String> books = new HashMap<String, String>();
         String booid = request.getParameter("books");
+        String booidno = request.getParameter("nobooks");
         if (request.getParameter("op").equals("show")) {
             try {
                 if (request.getSession().getAttribute("bookss") != null) {
@@ -34,6 +36,13 @@ public class BooksServlet extends HttpServlet {
                             boo.put(strr, strr);
                         }
                     }
+                    Iterator<String> item = boo.keySet().iterator();
+                    while (item.hasNext()) {
+                        String key = item.next();
+                        if (booidno.indexOf((key + ",")) != -1) {
+                            item.remove();
+                        }
+                    }
                 } else {
                     if (booid != null) {
                         String booidd = booid.substring(0, booid.length() - 1);
@@ -43,13 +52,21 @@ public class BooksServlet extends HttpServlet {
                         }
                         request.getSession().setAttribute("bookss", books);
                     } else {
-                        System.out.println("4");
                         request.getSession().setAttribute("bookss", books);
                     }
                 }
+
                 Pager p = this.showBooks(request, response);
                 String s = JSON.toJSONString(p);
-                response.getWriter().print(s);
+                String json = "";
+                Map<String, String> aaaa = (Map<String, String>) request.getSession().getAttribute("bookss");
+                if (aaaa.size() > 0) {
+                    for (String aaaamap : aaaa.keySet()) {
+                        json += aaaa.get(aaaamap) + ",";
+                    }
+                }
+                String ss = s.substring(0, s.length() - 1) + ",\"ch\"" + ":" + "\"" + json + "\"" + "}";
+                response.getWriter().print(ss);
             } catch (SQLException e) {
                 e.printStackTrace();
             } catch (ClassNotFoundException e) {

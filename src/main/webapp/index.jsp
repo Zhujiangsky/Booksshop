@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <html>
 <head>
     <title>Title</title>
@@ -36,7 +37,7 @@
                 $.each(result.dataList, function () {
                     if (i % 2 != 0) {
                         $("#table1").append("<tr class=\"odd\">\n" +
-                            "                    <td><input type=\"checkbox\" name=\"bookId\" value=\"" + this.bid + "\"/><input type='hidden' value='" + this.bid + "'  /></td>\n" +
+                            "                    <td><input type=\"checkbox\" name=\"bookId\" value=\"" + this.bid + "\" /><input type='hidden' value='" + this.bid + "'  /></td>\n" +
                             "                    <td class=\"title\">" + this.bookname + "</td>\n" +
                             "                    <td>￥" + this.b_price + "</td>\n" +
                             "                    <td>" + this.stock + "</td>\n" +
@@ -45,7 +46,7 @@
 
                     } else {
                         $("#table1").append("<tr>\n" +
-                            "                    <td><input type=\"checkbox\" name=\"bookId\" value=\"" + this.bid + "\"/></td>\n" +
+                            "                    <td><input type=\"checkbox\" name=\"bookId\" value=\"" + this.bid + "\" /></td>\n" +
                             "                    <td class=\"title\">" + this.bookname + "</td>\n" +
                             "                    <td>￥" + this.b_price + "</td>\n" +
                             "                    <td>" + this.stock + "</td>\n" +
@@ -60,19 +61,23 @@
         });
     });
     var request = new XMLHttpRequest();
+
     function onn(e) {
         var s = "";
+        var ns = "";
         var o = document.getElementsByName("bookId");
-        for (var k in o) {
+        for (var k = 0; k < o.length; k++) {
             if (o[k].checked) {
                 check_val.push(o[k].value);
                 s += o[k].value + ",";
+            } else {
+                ns += o[k].value + ",";
             }
         }
         request.open("post", "BooksServlet", true);
         request.setRequestHeader("Content-Type",
             "application/x-www-form-urlencoded");
-        request.send("op=show&pageIndex=" + e + "&books=" + s);
+        request.send("op=show&pageIndex=" + e + "&books=" + s + "&nobooks=" + ns);
     }
 
     request.onreadystatechange = function (ev) {
@@ -94,16 +99,15 @@
             $(json.dataList).each(function () {
                 if (i % 2 != 0) {
                     $("#table1").append("<tr class=\"odd\">\n" +
-                        "                    <td><input type=\"checkbox\" name=\"bookId\" value=\"" + this.bid + "\"/></td>\n" +
+                        "                    <td><input type=\"checkbox\" name=\"bookId\" " + (json.ch.indexOf((this.bid + ",")) != -1 ? "checked='checked'" : "") + "value=\"" + this.bid + "\" /></td>\n" +
                         "                    <td class=\"title\">" + this.bookname + "</td>\n" +
                         "                    <td>￥" + this.b_price + "</td>\n" +
                         "                    <td>" + this.stock + "</td>\n" +
                         "                    <td class=\"thumb\"><img src=\"" + this.image + "\"/></td>\n" +
                         "                </tr>");
-
                 } else {
                     $("#table1").append("<tr>\n" +
-                        "                    <td><input type=\"checkbox\" name=\"bookId\" value=\"" + this.bid + "\"/></td>\n" +
+                        "                    <td><input type=\"checkbox\" name=\"bookId\" " + (json.ch.indexOf((this.bid + ",")) != -1 ? "checked='checked'" : "") + "value=\"" + this.bid + "\" /></td>\n" +
                         "                    <td class=\"title\">" + this.bookname + "</td>\n" +
                         "                    <td>￥" + this.b_price + "</td>\n" +
                         "                    <td>" + this.stock + "</td>\n" +
@@ -142,7 +146,8 @@
             </table>
             <div class="page-spliter" id="fy">
             </div>
-            <div class="button"><input class="input-btn" type="submit" name="submit" value=""/></div>
+            <div class="button"><input class="input-btn" type="submit" name="submit" value="" disabled="disabled"/>
+            </div>
         </form>
     </div>
 </div>
