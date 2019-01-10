@@ -20,10 +20,18 @@ public class ShoppingAction implements ActionInterface {
     @Override
     public String execute(String type, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ClassNotFoundException {
         if (type.equals("zf")) {
-            return "shopping.jsp";
-        } else {
+            Map<String, String> map = (Map<String, String>) request.getSession().getAttribute("bookss");
+            if (map.size() > 0) {
+                return "shopping.jsp";
+            } else {
+                return "index.jsp";
+            }
+
+        } else if (type.equals("show")) {
             Pager p = this.showBooks(request, response);
             return JSON.toJSONString(p);
+        } else {
+            return "";
         }
 
     }

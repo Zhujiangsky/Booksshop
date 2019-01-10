@@ -82,7 +82,7 @@ public class ShoppingServlet extends HttpServlet {
                 }
                 String viewPath = null;
                 try {
-                    viewPath = action.execute("eeee", request, response);
+                    viewPath = action.execute("show", request, response);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 } catch (ClassNotFoundException e) {

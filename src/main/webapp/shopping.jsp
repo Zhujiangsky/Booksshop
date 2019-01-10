@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: zhujiang
-  Date: 2019/1/5
-  Time: 8:32
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -85,7 +78,7 @@
             </table>
             <div class="button">
                 <h4>总价：￥<span id="span1"></span>元</h4>
-                <input class="input-chart" type="submit" name="submit" value=""/>a
+                <input class="input-chart" type="submit" name="submit" value=""/>
             </div>
         </form>
     </div>
