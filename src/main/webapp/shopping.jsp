@@ -85,7 +85,7 @@
             </table>
             <div class="button">
                 <h4>总价：￥<span id="span1"></span>元</h4>
-                <input class="input-chart" type="submit" name="submit" value=""/>
+                <input class="input-chart" type="submit" name="submit" value=""/>a
             </div>
         </form>
     </div>
