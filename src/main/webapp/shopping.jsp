@@ -23,29 +23,41 @@
             "data": "action=shoppingAction&op=xianshi",                      // 要发送到服务器的数据
             "dataType": "json",                   // 指定传输的数据格式
             "success": function (result) {// 请求成功后要执行的代码
+                $("#span1").html(sum);
                 $("#table3").append("<tr class=\"title\">\n" +
                     "                    <th class=\"view\">图片预览</th>\n" +
                     "                    <th>书名</th>\n" +
                     "                    <th class=\"nums\">数量</th>\n" +
                     "                    <th class=\"price\">价格</th>\n" +
                     "                </tr>");
-
+                var sum = 0;
                 $.each(result.dataList, function () {
                     $("#table3").append("<tr>\n" +
                         "                    <td class=\"thumb\"><img src=\"" + this.image + "\" / > </td>\n" +
                         "                    <td class=\"title\">" + this.bookname + "</td>\n" +
-                        "                    <td><input class=\"input-text\" type=\"text\" name=\"nums\" value=\"1\"/></td>\n" +
-                        "                    <td>￥<span>" + this.b_price + "</span></td>\n" +
+                        "                    <td><input class=\"input-text\" type=\"text\" name=\"nums\" onblur='update(" + this.bid + ")' id=\"" + this.bid + "\" value=\"1\"/></td>\n" +
+                        "                    <td>￥<input type='hidden' value='" + this.b_price + "' name='price' ><span >" + this.b_price + "</span></td>\n" +
                         "                </tr>"
                     );
-
+                    sum += parseFloat(this.b_price);
                 });
+                $("#span1").html(sum);
             }
         });
-
-
     });
 
+    function update(e) {
+        var sum = 0;
+        var sss = $("#" + e).val();
+        var ssss = $("#" + e).parent().next().children("input").val();
+        $("#" + e).parent().next().children("span").html((parseFloat(ssss) * parseInt(sss)));
+        var list = document.getElementsByName("nums");
+        var list1 = document.getElementsByName("price");
+        for (var i = 0; i < list.length; i++) {
+            sum += (parseInt(list[i].value) * parseFloat(list1[i].value));
+        }
+        $("#span1").html(sum);
+    }
 
 </script>
 <body>
@@ -70,10 +82,9 @@
     <div class="list bookList">
         <form method="post" name="shoping" action="shopping-success.jsp">
             <table id="table3">
-
             </table>
             <div class="button">
-                <h4>总价：￥<span>65.00</span>元</h4>
+                <h4>总价：￥<span id="span1"></span>元</h4>
                 <input class="input-chart" type="submit" name="submit" value=""/>
             </div>
         </form>
