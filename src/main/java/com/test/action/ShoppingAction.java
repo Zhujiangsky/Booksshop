@@ -81,6 +81,7 @@ public class ShoppingAction implements ActionInterface {
                     it.setTotal_price(d + "");
                     itd.add(it);
                 }
+                request.getSession().removeAttribute("bookss");
                 return "shopping-success.jsp";
             }
         }
