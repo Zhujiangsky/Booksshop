@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface ItemsInterface {
-    public int add(ItemsEntity itemsEntity);
+    public int add(ItemsEntity itemsEntity) throws SQLException, ClassNotFoundException;
 
     public List<ItemsEntity> queryAll(Integer currentPageNo, Integer pageSize);
 

@@ -16,12 +16,12 @@
             "data": "action=shoppingAction&op=xianshi",                      // 要发送到服务器的数据
             "dataType": "json",                   // 指定传输的数据格式
             "success": function (result) {// 请求成功后要执行的代码
-                $("#span1").html(sum);
                 $("#table3").append("<tr class=\"title\">\n" +
                     "                    <th class=\"view\">图片预览</th>\n" +
                     "                    <th>书名</th>\n" +
                     "                    <th class=\"nums\">数量</th>\n" +
                     "                    <th class=\"price\">价格</th>\n" +
+                    "                    <th class=\"price\">操作</th>\n" +
                     "                </tr>");
                 var sum = 0;
                 $.each(result.dataList, function () {
@@ -30,6 +30,7 @@
                         "                    <td class=\"title\">" + this.bookname + "</td>\n" +
                         "                    <td><input class=\"input-text\" type=\"text\" name=\"nums\" onblur='update(" + this.bid + ")' id=\"" + this.bid + "\" value=\"1\"/></td>\n" +
                         "                    <td>￥<input type='hidden' value='" + this.b_price + "' name='price' ><span >" + this.b_price + "</span></td>\n" +
+                        "                    <td><input type='button' value='删除' onclick='deletee(" + this.bid + ")' ></td>\n" +
                         "                </tr>"
                     );
                     sum += parseFloat(this.b_price);
@@ -38,6 +39,45 @@
             }
         });
     });
+
+    function deletee(e) {
+        $.ajax({
+            "url": "ShoppingServlet",                      // 要提交的URL路径
+            "type": "post",                     // 发送请求的方式
+            "data": "action=shoppingAction&op=delete&delete=" + e,                      // 要发送到服务器的数据
+            "dataType": "json",                   // 指定传输的数据格式
+            "success": function (result) {// 请求成功后要执行的代码
+                $("#div1").children().children("table").remove();
+                $("#div1").children().children("div").remove();
+                $("#div1").children().append(" <table id=\"table3\">\n" +
+                    "            </table>");
+                $("#table3").append("<tr class=\"title\">\n" +
+                    "                    <th class=\"view\">图片预览</th>\n" +
+                    "                    <th>书名</th>\n" +
+                    "                    <th class=\"nums\">数量</th>\n" +
+                    "                    <th class=\"price\">价格</th>\n" +
+                    "                    <th class=\"price\">操作</th>\n" +
+                    "                </tr>");
+                var sum = 0;
+                $.each(result.dataList, function () {
+                    $("#table3").append("<tr>\n" +
+                        "                    <td class=\"thumb\"><img src=\"" + this.image + "\" / > </td>\n" +
+                        "                    <td class=\"title\">" + this.bookname + "</td>\n" +
+                        "                    <td><input class=\"input-text\" type=\"text\" name=\"nums\" onblur='update(" + this.bid + ")' id=\"" + this.bid + "\" value=\"1\"/></td>\n" +
+                        "                    <td>￥<input type='hidden' value='" + this.b_price + "' name='price' ><span >" + this.b_price + "</span></td>\n" +
+                        "                    <td><input type='button' value='删除' onclick='deletee(" + this.bid + ")' ></td>\n" +
+                        "                </tr>"
+                    );
+                    sum += parseFloat(this.b_price);
+                });
+                $("#div1").children().append(" <div class=\"button\">\n" +
+                    "                <h4>总价：￥<span id=\"span1\"></span>元</h4>\n" +
+                    "                <input class=\"input-chart\" type=\"submit\" name=\"submit\" value=\"\"/>\n" +
+                    "            </div>");
+                $("#span1").html(sum);
+            }
+        });
+    }
 
     function update(e) {
         var sum = 0;
@@ -72,8 +112,8 @@
     </div>
 </div>
 <div id="content" class="wrap">
-    <div class="list bookList">
-        <form method="post" name="shoping" action="shopping-success.jsp">
+    <div class="list bookList" id="div1">
+        <form method="post" name="shoping" action="ShoppingServlet?action=shoppingAction&op=gm">
             <table id="table3">
             </table>
             <div class="button">
@@ -81,6 +121,7 @@
                 <input class="input-chart" type="submit" name="submit" value=""/>
             </div>
         </form>
+
     </div>
 </div>
 <div id="footer" class="wrap">

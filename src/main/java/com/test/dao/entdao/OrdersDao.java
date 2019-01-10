@@ -38,8 +38,9 @@ public class OrdersDao extends BaseDao implements OrdersInterface {
     }
 
     @Override
-    public int add(OrdersEntity ordersEntity) {
-        return 0;
+    public int add(OrdersEntity ordersEntity) throws SQLException, ClassNotFoundException {
+        String sql = "insert into orders(username) values(?)";
+        return this.executeUpdate(sql, ordersEntity.getUsername());
     }
 
     @Override
@@ -60,5 +61,11 @@ public class OrdersDao extends BaseDao implements OrdersInterface {
     @Override
     public Integer count(String filename) throws SQLException, ClassNotFoundException {
         return null;
+    }
+
+    public Integer queryMaxId() throws SQLException, ClassNotFoundException {
+        String sql = "select MAX(orders.oid) as oid from orders";
+        OrdersEntity o = this.executeQueryOne(sql, rm);
+        return o.getOid();
     }
 }

@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface OrdersInterface {
-    public int add(OrdersEntity ordersEntity);
+    public int add(OrdersEntity ordersEntity) throws SQLException, ClassNotFoundException;
 
     public List<OrdersEntity> queryAll(Integer currentPageNo, Integer pageSize);
 

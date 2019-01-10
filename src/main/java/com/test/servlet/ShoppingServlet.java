@@ -1,6 +1,7 @@
 package com.test.servlet;
 
 import com.test.action.ActionInterface;
+import jdk.management.resource.internal.inst.SocketOutputStreamRMHooks;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -83,6 +84,44 @@ public class ShoppingServlet extends HttpServlet {
                 String viewPath = null;
                 try {
                     viewPath = action.execute("show", request, response);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+                response.getWriter().print(viewPath);
+            }
+        } else if (op.equals("gm")) {
+            System.out.println("aaa");
+            if (actionName == null) {
+                request.getRequestDispatcher("index.jsp").forward(request, response);
+            } else {
+
+                ActionInterface action = actionMap.get(actionName);
+                if (action == null) {
+                    throw new ServletException("请求的action不存在！");
+                }
+                String viewPath = null;
+                try {
+                    viewPath = action.execute("gm", request, response);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+                request.getRequestDispatcher(viewPath).forward(request, response);
+            }
+        } else if (op.equals("delete")) {
+            if (actionName == null) {
+                request.getRequestDispatcher("index.jsp").forward(request, response);
+            } else {
+                ActionInterface action = actionMap.get(actionName);
+                if (action == null) {
+                    throw new ServletException("请求的action不存在！");
+                }
+                String viewPath = null;
+                try {
+                    viewPath = action.execute("zff", request, response);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 } catch (ClassNotFoundException e) {

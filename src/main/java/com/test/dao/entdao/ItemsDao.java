@@ -51,8 +51,9 @@ public class ItemsDao extends BaseDao implements ItemsInterface {
     }
 
     @Override
-    public int add(ItemsEntity itemsEntity) {
-        return 0;
+    public int add(ItemsEntity itemsEntity) throws SQLException, ClassNotFoundException {
+        String sql = "INSERT into items(oid,bid,createdate,count,price,state,total_price) VALUES(?,?,now(),?,?,0,?)";
+        return this.executeUpdate(sql, itemsEntity.getOid(), itemsEntity.getBid(), itemsEntity.getCount(), itemsEntity.getPrice(), itemsEntity.getTotal_price());
     }
 
     @Override
